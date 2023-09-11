@@ -64,9 +64,9 @@ const getAdminProducts = async (adminId) => {
 };
 
 module.exports = {
-  checkAndCreateAdminsAndUsers,
+  // checkAndCreateAdminsAndUsers,
   // getAllAdmins,
-  getAllUsers,
-  getOneUser,
-  getAdminProducts,
+  // getAllUsers,
+  // getOneUser,
+  // getAdminProducts,
 };

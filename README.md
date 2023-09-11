@@ -53,13 +53,11 @@ URL="mongodb+srv://UserName:UserPass@ClusterName.b99wetu.mongodb.net/DBName?retr
 EXPRESS_SESSION_KEY="your-secret-key"
 ```
 
-- **MongoDB-Connect-Database** <br>
+- **Mongoose-Connect-Database** <br>
 Basically, **"./Model/database/dbConnection.js"** is used in **"./index.js"** to connect to database.
 - **MongoDB-Create-And-Associate-Models** <br>
 **"./Model/database/dbAssociation.js"** is used in **./index.js** so that all model associations and models are properly set. We need to only import dbAssociations.js in index.js.
-- **MongoDB-Sequelize-Manage-Database-Function-Operations** <br>
-**./Model/operations/dbProductOperation.js** is used in controllers like **./Controller/controllers/adminController.js**
 - **Express-Session-Keep-Cookie-in-req.session** <br>
 express-session is a package and it keeps some session files in it so the selected admin will be known by the system.
-- **MongoDB-Queries**
+- **Mongoose-Queries**
 All query related info kept inside "/Model/tables/orderTable.js", "/Model/tables/productTable.js" and "/Model/tables/userTable.js".

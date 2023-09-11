@@ -1,18 +1,19 @@
 const express = require("express");
 const path = require("path");
 
+// Mongoose-Connect-Database
+const mongoose = require("mongoose");
+
 // Express-Session-Keep-Cookie-in-req.session
 // This is used to keep session for chosen admin
 const session = require("express-session");
 
-// MongoDB-Connect-Database
+// Mongoose-Connect-Database
 // Allows .env file to be used
 require("dotenv").config();
 
-// MongoDB-Connect-Database
 // This is used to connect database
-const dbConnection = require("./Model/dbConnection");
-const dbAdminOperation = require("./Model/operations/dbAdminOperation");
+// const dbAdminOperation = require("./Model/operations/dbAdminOperation");
 
 const app = express();
 
@@ -30,7 +31,7 @@ app.set("view engine", "ejs");
 app.set("views", "View/html");
 
 const adminRoute = require("./Controller/routes/adminRoute");
-const shopRoute = require("./Controller/routes/shopRoute");
+// const shopRoute = require("./Controller/routes/shopRoute");
 const NoRoute = require("./Controller/routes/NoRoute");
 
 // Express-Session-Keep-Cookie-in-req.session
@@ -44,38 +45,43 @@ app.use(
 );
 
 // Express-Session-Keep-Cookie-in-req.session
-app.use(async (req, res, next) => {
-  let allUsers;
+// app.use(async (req, res, next) => {
+//   let allUsers;
 
-  if (!req.session.userId) {
-    allUsers = await dbAdminOperation.getAllUsers();
+//   if (!req.session.userId) {
+//     allUsers = await dbAdminOperation.getAllUsers();
 
-    req.session.userId = allUsers[0]._id;
-    req.session.userName = allUsers[0].userName;
-    req.session.userEmail = allUsers[0].userEmail;
-    req.session.adminId = allUsers[0].adminId;
-  }
+//     req.session.userId = allUsers[0]._id;
+//     req.session.userName = allUsers[0].userName;
+//     req.session.userEmail = allUsers[0].userEmail;
+//     req.session.adminId = allUsers[0].adminId;
+//   }
 
-  next();
-});
+//   next();
+// });
 
 // Extra layer "/admin"
 // Route only has "/add-product"
 // Combines to the Route /admin/add-product
 // Instead of app.use and router file, we could have also used app.get
-app.use("/admin", adminRoute);
+// app.use("/admin", adminRoute);
 
-app.use(shopRoute);
+// app.use(shopRoute);
 
 // Unspecified routes, 404 page
 // Instead of app.use and router file, we could have also used app.get
 app.use(NoRoute);
 
-// MongoDB-Connect-Database
-dbConnection.mongoConnect((dbConnectionResult) => {
-  dbAdminOperation.checkAndCreateAdminsAndUsers();
+// Mongoose-Connect-Database
+mongoose
+  .connect(process.env.URL)
+  .then((result) => {
+    // dbAdminOperation.checkAndCreateAdminsAndUsers();
 
-  app.listen(3000, () => {
-    console.log("Server started on port 3000");
+    app.listen(3001, () => {
+      console.log("Server started on port 3001");
+    });
+  })
+  .catch((err) => {
+    console.error(err);
   });
-});
