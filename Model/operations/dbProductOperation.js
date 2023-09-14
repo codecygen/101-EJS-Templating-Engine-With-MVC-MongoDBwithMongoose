@@ -21,41 +21,53 @@ const addNewProduct = async (newProduct) => {
 };
 
 const getAllProducts = async () => {
-  const allProducts = await Tables.ProductTable.getProducts();
+  let allProducts;
+
+  try {
+    allProducts = await Tables.ProductTable.find();
+  } catch (err) {
+    console.error(err);
+  }
 
   return allProducts;
 };
 
 const getOneProduct = async (productId) => {
-  const foundProduct = await Tables.ProductTable.findById(productId);
+  let foundProduct;
 
+  try {
+    foundProduct = await Tables.ProductTable.findById(productId);
+  } catch (err) {
+    console.error(err);
+  }
+  
   return foundProduct;
 };
 
-const updateOneProduct = async (updatedData) => {
-  const { _id, productName, productDesc, productPrice, productImg, adminId } =
-    updatedData;
+// const updateOneProduct = async (updatedData) => {
+//   const { _id, productName, productDesc, productPrice, productImg, adminId } =
+//     updatedData;
 
-  const productTable = new Tables.ProductTable(
-    _id,
-    productName,
-    productDesc,
-    productPrice,
-    productImg,
-    adminId
-  );
+//   const productTable = new Tables.ProductTable(
+//     _id,
+//     productName,
+//     productDesc,
+//     productPrice,
+//     productImg,
+//     adminId
+//   );
 
-  await productTable.save();
-};
+//   await productTable.save();
+// };
 
-const deleteOneProduct = async (productId) => {
-  const result = await Tables.ProductTable.destroy(productId);
-};
+// const deleteOneProduct = async (productId) => {
+//   const result = await Tables.ProductTable.destroy(productId);
+// };
 
 module.exports = {
   addNewProduct,
   getAllProducts,
   getOneProduct,
-  updateOneProduct,
-  deleteOneProduct,
+  // updateOneProduct,
+  // deleteOneProduct,
 };

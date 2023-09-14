@@ -11,32 +11,32 @@ const dbOrderOperation = require("../../Model/operations/dbOrderOperation");
 // combination of these 2 routes become
 // "/display/products"
 
-// exports.getProducts = async (req, res, next) => {
-//   const allProducts = await dbProductOperation.getAllProducts();
+exports.getProducts = async (req, res, next) => {
+  const allProducts = await dbProductOperation.getAllProducts();
 
-//   // This means render productList.ejs
-//   // with renderTitle, pagePath and productList arguments
-//   // server will understand "allProducts" as allProducts.ejs because
-//   // it is indicated in index.js like that, html is the root folder for all
-//   // ejs files.
-//   res.render("shop/productList", {
-//     pagePath: "/products",
-//     productList: allProducts,
-//     renderTitle: "All Products",
-//     selectedUser: res.locals.selectedUser,
-//   });
-// };
+  // This means render productList.ejs
+  // with renderTitle, pagePath and productList arguments
+  // server will understand "allProducts" as allProducts.ejs because
+  // it is indicated in index.js like that, html is the root folder for all
+  // ejs files.
+  res.render("shop/productList", {
+    pagePath: "/products",
+    productList: allProducts,
+    renderTitle: "All Products",
+    selectedUser: res.locals.selectedUser,
+  });
+};
 
-// exports.getIndex = async (req, res, next) => {
-//   const products = await dbProductOperation.getAllProducts();
+exports.getIndex = async (req, res, next) => {
+  const products = await dbProductOperation.getAllProducts();
 
-//   res.render("shop/index", {
-//     pagePath: "/",
-//     productList: products,
-//     renderTitle: "Shop",
-//     selectedUser: res.locals.selectedUser,
-//   });
-// };
+  res.render("shop/index", {
+    pagePath: "/",
+    productList: products,
+    renderTitle: "Shop",
+    selectedUser: res.locals.selectedUser,
+  });
+};
 
 // exports.getCart = async (req, res, next) => {
 //   const currentUser = await dbAdminOperation.getOneUser(req.session.userId);
@@ -72,18 +72,18 @@ const dbOrderOperation = require("../../Model/operations/dbOrderOperation");
 // //   });
 // // };
 
-// exports.getProduct = async (req, res, next) => {
-//   const productId = req.params.productId;
+exports.getProduct = async (req, res, next) => {
+  const productId = req.params.productId;
 
-//   const foundProduct = await dbProductOperation.getOneProduct(productId);
+  const foundProduct = await dbProductOperation.getOneProduct(productId);
 
-//   res.render("shop/productDetail", {
-//     pagePath: "/products",
-//     renderTitle: `${foundProduct.productName} Details`,
-//     product: foundProduct,
-//     selectedUser: res.locals.selectedUser,
-//   });
-// };
+  res.render("shop/productDetail", {
+    pagePath: "/products",
+    renderTitle: `${foundProduct.productName} Details`,
+    product: foundProduct,
+    selectedUser: res.locals.selectedUser,
+  });
+};
 
 // exports.postDeleteCartItem = async (req, res, next) => {
 //   const loggedInUser = res.locals.selectedUser;
