@@ -40,25 +40,22 @@ const getOneProduct = async (productId) => {
   } catch (err) {
     console.error(err);
   }
-  
+
   return foundProduct;
 };
 
-// const updateOneProduct = async (updatedData) => {
-//   const { _id, productName, productDesc, productPrice, productImg, adminId } =
-//     updatedData;
+const updateOneProduct = async (updatedData) => {
+  const { _id, productName, productDesc, productPrice, productImg, adminId } =
+    updatedData;
 
-//   const productTable = new Tables.ProductTable(
-//     _id,
-//     productName,
-//     productDesc,
-//     productPrice,
-//     productImg,
-//     adminId
-//   );
-
-//   await productTable.save();
-// };
+  try {
+    await Tables.ProductTable.findOneAndUpdate({ _id: _id }, updatedData, {
+      new: true,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 // const deleteOneProduct = async (productId) => {
 //   const result = await Tables.ProductTable.destroy(productId);
@@ -68,6 +65,6 @@ module.exports = {
   addNewProduct,
   getAllProducts,
   getOneProduct,
-  // updateOneProduct,
+  updateOneProduct,
   // deleteOneProduct,
 };
