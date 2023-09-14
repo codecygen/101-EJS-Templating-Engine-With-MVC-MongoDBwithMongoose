@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
     ],
   },
   // This section enforces collection name to be "UserTable"
-  // instead of the default "userTables"
+  // instead of the default "usertables"
   { collection: "UserTable" }
 );
 
