@@ -5,18 +5,19 @@ const addNewProduct = async (newProduct) => {
   const { productName, productDesc, productPrice, productImg, adminId } =
     newProduct;
 
-    const _id = null;
-
-  const productTable = new Tables.ProductTable(
-    _id,
+  const productTable = new Tables.ProductTable({
     productName,
     productDesc,
-    productPrice,
+    productPrice: parseInt(productPrice),
     productImg,
-    adminId
-  );
+    adminId,
+  });
 
-  await productTable.save();
+  try {
+    await productTable.save();
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 const getAllProducts = async () => {
@@ -32,14 +33,8 @@ const getOneProduct = async (productId) => {
 };
 
 const updateOneProduct = async (updatedData) => {
-  const {
-    _id,
-    productName,
-    productDesc,
-    productPrice,
-    productImg,
-    adminId,
-  } = updatedData;
+  const { _id, productName, productDesc, productPrice, productImg, adminId } =
+    updatedData;
 
   const productTable = new Tables.ProductTable(
     _id,
@@ -47,7 +42,7 @@ const updateOneProduct = async (updatedData) => {
     productDesc,
     productPrice,
     productImg,
-    adminId,
+    adminId
   );
 
   await productTable.save();

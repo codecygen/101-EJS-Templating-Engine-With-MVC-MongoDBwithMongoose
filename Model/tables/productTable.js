@@ -1,4 +1,31 @@
 // Mongoose-Queries
+const mongoose = require("mongoose");
+
+const productSchema = new mongoose.Schema({
+    productName: {
+        type: String,
+        required: true,
+    },
+
+    productDesc: {
+        type: String,
+        required: true,
+    },
+
+    productPrice: {
+        type: Number,
+        required: true,
+    },
+
+    productImg: {
+        type: String,
+        required: true,
+    },
+
+    adminId: mongoose.Types.ObjectId,
+}, { collection: "ProductTable" });
+
+module.exports = mongoose.model("ProductTable", productSchema);
 
 // const dbConnection = require("../dbConnection");
 // const { ObjectId } = require("mongodb");

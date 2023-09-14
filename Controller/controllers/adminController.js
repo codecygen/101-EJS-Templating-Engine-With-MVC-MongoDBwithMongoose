@@ -1,9 +1,10 @@
+const { ObjectId } = require("mongodb");
+
 const dbProductOperation = require("../../Model/operations/dbProductOperation");
 const dbAdminOperation = require("../../Model/operations/dbAdminOperation");
 const { ProductTable } = require("../../Model/dbAssociation");
 
 exports.getAddProduct = (req, res, next) => {
-
   res.render("admin/addEditProduct", {
     renderTitle: "Add Product",
     pagePath: "/admin/add-product",
@@ -13,7 +14,6 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = async (req, res, next) => {
-
   const newProduct = {
     productName: req.body.newProductName,
     productDesc: req.body.newProductDescription,
@@ -21,14 +21,12 @@ exports.postAddProduct = async (req, res, next) => {
     productImg: req.body.newProductImage,
     // Express-Session-Keep-Cookie-in-req.session
     // here, we can assign req.session from everywhere because it is a cookie file.
-    adminId: res.locals.selectedUser.adminId,
+    adminId: new ObjectId(res.locals.selectedUser.adminId),
   };
 
-  console.log(newProduct);
+  await dbProductOperation.addNewProduct(newProduct);
 
-  // await dbProductOperation.addNewProduct(newProduct);
-
-  // res.redirect("/");
+  res.redirect("/");
 };
 
 // exports.getProducts = async (req, res, next) => {
