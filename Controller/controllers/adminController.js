@@ -24,50 +24,52 @@ exports.postAddProduct = async (req, res, next) => {
     adminId: res.locals.selectedUser.adminId,
   };
 
-  await dbProductOperation.addNewProduct(newProduct);
+  console.log(newProduct);
 
-  res.redirect("/");
+  // await dbProductOperation.addNewProduct(newProduct);
+
+  // res.redirect("/");
 };
 
-exports.getProducts = async (req, res, next) => {
-  let products = false;
+// exports.getProducts = async (req, res, next) => {
+//   let products = false;
 
-  if (req.session.adminId) {
-    products = await dbAdminOperation.getAdminProducts(req.session.adminId);
-  }
+//   if (req.session.adminId) {
+//     products = await dbAdminOperation.getAdminProducts(req.session.adminId);
+//   }
 
-  res.render("admin/adminProducts", {
-    pagePath: "/admin/products",
-    productList: products,
-    renderTitle: "Admin Products",
-    selectedUser: res.locals.selectedUser,
-  });
-};
+//   res.render("admin/adminProducts", {
+//     pagePath: "/admin/products",
+//     productList: products,
+//     renderTitle: "Admin Products",
+//     selectedUser: res.locals.selectedUser,
+//   });
+// };
 
 // // editProduct and postEditProduct are responsible of
 // // "Edit" button.
-exports.editProduct = async (req, res, next) => {
-  const productId = req.params.productId;
+// exports.editProduct = async (req, res, next) => {
+//   const productId = req.params.productId;
 
-  const editMode = req.query.edit;
-  const isEditMode = editMode === "true";
+//   const editMode = req.query.edit;
+//   const isEditMode = editMode === "true";
 
-  const foundProduct = await dbProductOperation.getOneProduct(productId);
+//   const foundProduct = await dbProductOperation.getOneProduct(productId);
 
-  // Normally if product cannot be found, an error message
-  // should be shown.
-  if (!foundProduct) {
-    return res.redirect("/");
-  }
+//   // Normally if product cannot be found, an error message
+//   // should be shown.
+//   if (!foundProduct) {
+//     return res.redirect("/");
+//   }
 
-  res.render("admin/addEditProduct", {
-    renderTitle: "Edit Product",
-    pagePath: "/admin/edit-product",
-    editing: isEditMode,
-    product: foundProduct,
-    selectedUser: res.locals.selectedUser,
-  });
-};
+//   res.render("admin/addEditProduct", {
+//     renderTitle: "Edit Product",
+//     pagePath: "/admin/edit-product",
+//     editing: isEditMode,
+//     product: foundProduct,
+//     selectedUser: res.locals.selectedUser,
+//   });
+// };
 
 // // editProduct and postEditProduct are responsible of
 // // "Edit" button.
@@ -75,27 +77,27 @@ exports.editProduct = async (req, res, next) => {
 // // After all "POST" request logic
 // // always use res.redirect to avoid
 // // unnecessary loading screen on the page.
-exports.postEditProduct = async (req, res, next) => {
-  const productId = req.body.editedProductId;
+// exports.postEditProduct = async (req, res, next) => {
+//   const productId = req.body.editedProductId;
 
-  const updatedProduct = {
-    _id: productId,
-    productName: req.body.newProductName,
-    productDesc: req.body.newProductDescription,
-    productPrice: req.body.newProductPrice,
-    productImg: req.body.newProductImage,
-    adminId: res.locals.selectedUser.adminId,
-  };
+//   const updatedProduct = {
+//     _id: productId,
+//     productName: req.body.newProductName,
+//     productDesc: req.body.newProductDescription,
+//     productPrice: req.body.newProductPrice,
+//     productImg: req.body.newProductImage,
+//     adminId: res.locals.selectedUser.adminId,
+//   };
 
-  await dbProductOperation.updateOneProduct(updatedProduct);
+//   await dbProductOperation.updateOneProduct(updatedProduct);
 
-  res.redirect("/");
-};
+//   res.redirect("/");
+// };
 
-exports.postDeleteProduct = async (req, res, next) => {
-  const deletedId = req.body.deletedProductId;
+// exports.postDeleteProduct = async (req, res, next) => {
+//   const deletedId = req.body.deletedProductId;
 
-  await dbProductOperation.deleteOneProduct(deletedId);
+//   await dbProductOperation.deleteOneProduct(deletedId);
 
-  res.redirect("/admin/products");
-};
+//   res.redirect("/admin/products");
+// };

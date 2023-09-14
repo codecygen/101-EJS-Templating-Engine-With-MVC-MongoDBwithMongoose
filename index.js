@@ -64,7 +64,7 @@ app.use(async (req, res, next) => {
 // Route only has "/add-product"
 // Combines to the Route /admin/add-product
 // Instead of app.use and router file, we could have also used app.get
-// app.use("/admin", adminRoute);
+app.use("/admin", adminRoute);
 
 app.use(shopRoute);
 
