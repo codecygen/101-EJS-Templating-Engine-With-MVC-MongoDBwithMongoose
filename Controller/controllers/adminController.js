@@ -29,20 +29,20 @@ exports.postAddProduct = async (req, res, next) => {
   res.redirect("/");
 };
 
-// exports.getProducts = async (req, res, next) => {
-//   let products = false;
+exports.getProducts = async (req, res, next) => {
+  let products = false;
 
-//   if (req.session.adminId) {
-//     products = await dbAdminOperation.getAdminProducts(req.session.adminId);
-//   }
+  if (req.session.adminId) {
+    products = await dbAdminOperation.getAdminProducts(req.session.adminId);
+  }
 
-//   res.render("admin/adminProducts", {
-//     pagePath: "/admin/products",
-//     productList: products,
-//     renderTitle: "Admin Products",
-//     selectedUser: res.locals.selectedUser,
-//   });
-// };
+  res.render("admin/adminProducts", {
+    pagePath: "/admin/products",
+    productList: products,
+    renderTitle: "Admin Products",
+    selectedUser: res.locals.selectedUser,
+  });
+};
 
 // // editProduct and postEditProduct are responsible of
 // // "Edit" button.

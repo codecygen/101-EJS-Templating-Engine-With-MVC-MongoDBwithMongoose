@@ -57,18 +57,25 @@ const getOneUser = async (userId) => {
   } catch (err) {
     console.error(err);
   }
-  
+
   return foundUser;
 };
 
-// const getAdminProducts = async (adminId) => {
-//   const adminProducts = await Tables.ProductTable.adminProducts(adminId);
-//   return adminProducts;
-// };
+const getAdminProducts = async (adminId) => {
+
+  let adminProducts;
+
+  try {
+    adminProducts = await Tables.ProductTable.find({adminId: adminId});
+  } catch (err) {
+    console.error(err);
+  }
+  return adminProducts;
+};
 
 module.exports = {
   checkAndCreateAdminsAndUsers,
   getAllUsers,
   getOneUser,
-  // getAdminProducts,
+  getAdminProducts,
 };

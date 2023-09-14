@@ -15,7 +15,7 @@ router.post("/add-product", checkAdmin, adminController.postAddProduct);
 
 // /admin/products
 // Because there is an extra layer in index.js of server
-// router.get("/products", checkAdmin, adminController.getProducts);
+router.get("/products", checkAdmin, adminController.getProducts);
 
 // /admin/products
 // Because there is an extra layer in index.js of server
