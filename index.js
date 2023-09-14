@@ -31,7 +31,7 @@ app.set("view engine", "ejs");
 app.set("views", "View/html");
 
 const adminRoute = require("./Controller/routes/adminRoute");
-// const shopRoute = require("./Controller/routes/shopRoute");
+const shopRoute = require("./Controller/routes/shopRoute");
 const NoRoute = require("./Controller/routes/NoRoute");
 
 // Express-Session-Keep-Cookie-in-req.session
@@ -45,20 +45,20 @@ app.use(
 );
 
 // Express-Session-Keep-Cookie-in-req.session
-// app.use(async (req, res, next) => {
-//   let allUsers;
+app.use(async (req, res, next) => {
+  let allUsers;
 
-//   if (!req.session.userId) {
-//     allUsers = await dbAdminOperation.getAllUsers();
+  if (!req.session.userId) {
+    allUsers = await dbAdminOperation.getAllUsers();
 
-//     req.session.userId = allUsers[0]._id;
-//     req.session.userName = allUsers[0].userName;
-//     req.session.userEmail = allUsers[0].userEmail;
-//     req.session.adminId = allUsers[0].adminId;
-//   }
+    req.session.userId = allUsers[0]._id;
+    req.session.userName = allUsers[0].userName;
+    req.session.userEmail = allUsers[0].userEmail;
+    req.session.adminId = allUsers[0].adminId;
+  }
 
-//   next();
-// });
+  next();
+});
 
 // Extra layer "/admin"
 // Route only has "/add-product"
@@ -66,7 +66,7 @@ app.use(
 // Instead of app.use and router file, we could have also used app.get
 // app.use("/admin", adminRoute);
 
-// app.use(shopRoute);
+app.use(shopRoute);
 
 // Unspecified routes, 404 page
 // Instead of app.use and router file, we could have also used app.get
