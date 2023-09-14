@@ -1,8 +1,9 @@
+const mongoose = require("mongoose");
+
 const Tables = require("../dbAssociation");
-const { v4: uuidv4 } = require("uuid");
 
 const checkAndCreateAdminsAndUsers = async () => {
-  const allUsers = await Tables.UserTable.getUsers();
+  const allUsers = await getAllUsers();
 
   if (allUsers.length > 0) {
     return;
@@ -12,12 +13,12 @@ const checkAndCreateAdminsAndUsers = async () => {
     {
       userName: "Aras",
       userEmail: "aras@gmail.com",
-      adminId: uuidv4(),
+      adminId: new mongoose.Types.ObjectId(),
     },
     {
       userName: "Jason",
       userEmail: "jason@gmail.com",
-      adminId: uuidv4(),
+      adminId: new mongoose.Types.ObjectId(),
     },
     {
       userName: "Alice",
@@ -29,44 +30,38 @@ const checkAndCreateAdminsAndUsers = async () => {
     },
   ];
 
-  const userTable = new Tables.UserTable();
-
-  await userTable.createUsers(newUsers);
+  try {
+    await Tables.UserTable.insertMany(newUsers);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-// const getAllAdmins = async () => {
-//   let result;
-
-//   try {
-//     result = await Tables.UserTable.findAll({ where: { adminId: true } });
-//   } catch (err) {
-//     console.error(err);
-//   }
-
-//   const allAdmins = result.map((value) => value.toJSON());
-//   return allAdmins;
-// };
-
 const getAllUsers = async () => {
-  const allUsers = await Tables.UserTable.getUsers();
+  let allUsers;
+
+  try {
+    allUsers = await Tables.UserTable.find();
+  } catch (err) {
+    console.error(err);
+  }
 
   return allUsers;
 };
 
-const getOneUser = async (userId) => {
-  const foundUser = await Tables.UserTable.findById(userId);
-  return foundUser;
-};
+// const getOneUser = async (userId) => {
+//   const foundUser = await Tables.UserTable.findById(userId);
+//   return foundUser;
+// };
 
-const getAdminProducts = async (adminId) => {
-  const adminProducts = await Tables.ProductTable.adminProducts(adminId);
-  return adminProducts;
-};
+// const getAdminProducts = async (adminId) => {
+//   const adminProducts = await Tables.ProductTable.adminProducts(adminId);
+//   return adminProducts;
+// };
 
 module.exports = {
-  // checkAndCreateAdminsAndUsers,
-  // getAllAdmins,
-  // getAllUsers,
+  checkAndCreateAdminsAndUsers,
+  getAllUsers,
   // getOneUser,
   // getAdminProducts,
 };

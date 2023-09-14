@@ -17,7 +17,6 @@
     "gitignore": "^0.7.0",
     "mongodb": "^5.7.0",
     "mongoose": "^7.5.1",
-    "nodemon": "^2.0.21",
-    "uuidv4": "^6.2.13"
+    "nodemon": "^2.0.21"
   }
 }

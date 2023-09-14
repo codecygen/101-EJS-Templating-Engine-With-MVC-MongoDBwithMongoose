@@ -13,7 +13,7 @@ const session = require("express-session");
 require("dotenv").config();
 
 // This is used to connect database
-// const dbAdminOperation = require("./Model/operations/dbAdminOperation");
+const dbAdminOperation = require("./Model/operations/dbAdminOperation");
 
 const app = express();
 
@@ -74,12 +74,12 @@ app.use(NoRoute);
 
 // Mongoose-Connect-Database
 mongoose
-  .connect(process.env.URL)
+  .connect(process.env.URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => {
-    // dbAdminOperation.checkAndCreateAdminsAndUsers();
+    dbAdminOperation.checkAndCreateAdminsAndUsers();
 
-    app.listen(3001, () => {
-      console.log("Server started on port 3001");
+    app.listen(3000, () => {
+      console.log("Server started on port 3000");
     });
   })
   .catch((err) => {
