@@ -35,25 +35,16 @@ const checkAndCreateAdminsAndUsers = async () => {
 
 const getAllUsers = async () => {
   const allUsers = await Tables.UserTable.getUsers();
-
   return allUsers;
 };
 
 const getOneUser = async (userId) => {
   const foundUser = await Tables.UserTable.getSingleUser(userId);
-
   return foundUser;
 };
 
 const getAdminProducts = async (adminId) => {
-
-  let adminProducts;
-
-  try {
-    adminProducts = await Tables.ProductTable.find({adminId: adminId});
-  } catch (err) {
-    console.error(err);
-  }
+  const adminProducts = await Tables.ProductTable.adminProducts(adminId);
   return adminProducts;
 };
 
