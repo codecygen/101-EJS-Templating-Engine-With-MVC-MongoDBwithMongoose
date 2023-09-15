@@ -17,8 +17,17 @@ const userSchema = new mongoose.Schema(
 
     userCart: [
       {
-        _id: String,
-        qty: Number,
+        _id: {
+          type: mongoose.Types.ObjectId,
+          // ref creates a relationship with ProductTable
+          ref: "ProductTable",
+          required: true,
+        },
+
+        qty: {
+          type: Number,
+          required: true,
+        },
       },
     ],
   },

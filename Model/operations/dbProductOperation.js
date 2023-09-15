@@ -57,14 +57,18 @@ const updateOneProduct = async (updatedData) => {
   }
 };
 
-// const deleteOneProduct = async (productId) => {
-//   const result = await Tables.ProductTable.destroy(productId);
-// };
+const deleteOneProduct = async (productId) => {
+  try {
+    await Tables.ProductTable.findByIdAndDelete(productId);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 module.exports = {
   addNewProduct,
   getAllProducts,
   getOneProduct,
   updateOneProduct,
-  // deleteOneProduct,
+  deleteOneProduct,
 };

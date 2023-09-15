@@ -14,6 +14,9 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = async (req, res, next) => {
+  console.log(req.usertable);
+
+
   const newProduct = {
     productName: req.body.newProductName,
     productDesc: req.body.newProductDescription,
@@ -21,7 +24,7 @@ exports.postAddProduct = async (req, res, next) => {
     productImg: req.body.newProductImage,
     // Express-Session-Keep-Cookie-in-req.session
     // here, we can assign req.session from everywhere because it is a cookie file.
-    adminId: new ObjectId(res.locals.selectedUser.adminId),
+    adminId: res.locals.selectedUser.adminId,
   };
 
   await dbProductOperation.addNewProduct(newProduct);
@@ -97,7 +100,7 @@ exports.postDeleteProduct = async (req, res, next) => {
 
   console.log(deletedId);
 
-  // await dbProductOperation.deleteOneProduct(deletedId);
+  await dbProductOperation.deleteOneProduct(deletedId);
 
-  // res.redirect("/admin/products");
+  res.redirect("/admin/products");
 };
