@@ -14,8 +14,6 @@ class OrderTable {
   async save() {
     const db = dbConnection.getDatabase();
     const orderCollection = await db.collection("OrderTable");
-    console.log(this.orderList);
-    // console.log(this.userId);
 
     try {
       await orderCollection.updateOne(

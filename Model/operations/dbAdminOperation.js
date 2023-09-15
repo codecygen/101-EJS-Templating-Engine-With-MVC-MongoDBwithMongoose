@@ -30,33 +30,17 @@ const checkAndCreateAdminsAndUsers = async () => {
     },
   ];
 
-  try {
-    await Tables.UserTable.insertMany(newUsers);
-  } catch (err) {
-    console.error(err);
-  }
+  await Tables.UserTable.createUsers(newUsers);
 };
 
 const getAllUsers = async () => {
-  let allUsers;
-
-  try {
-    allUsers = await Tables.UserTable.find();
-  } catch (err) {
-    console.error(err);
-  }
+  const allUsers = await Tables.UserTable.getUsers();
 
   return allUsers;
 };
 
 const getOneUser = async (userId) => {
-  let foundUser;
-
-  try {
-    foundUser = await Tables.UserTable.findById(userId);
-  } catch (err) {
-    console.error(err);
-  }
+  const foundUser = await Tables.UserTable.getSingleUser(userId);
 
   return foundUser;
 };

@@ -1,8 +1,5 @@
-const { ObjectId } = require("mongodb");
-
 const dbProductOperation = require("../../Model/operations/dbProductOperation");
 const dbAdminOperation = require("../../Model/operations/dbAdminOperation");
-const { ProductTable } = require("../../Model/dbAssociation");
 
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/addEditProduct", {
@@ -14,9 +11,6 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = async (req, res, next) => {
-  console.log(req.usertable);
-
-
   const newProduct = {
     productName: req.body.newProductName,
     productDesc: req.body.newProductDescription,
@@ -97,8 +91,6 @@ exports.postEditProduct = async (req, res, next) => {
 
 exports.postDeleteProduct = async (req, res, next) => {
   const deletedId = req.body.deletedProductId;
-
-  console.log(deletedId);
 
   await dbProductOperation.deleteOneProduct(deletedId);
 
