@@ -1,8 +1,22 @@
 // MongoDB-Sequelize-Manage-Database-Function-Operations
 const Tables = require("../dbAssociation");
 
-const addNewProduct = async (newProduct) => {
-  await Tables.ProductTable.createOrUpdateProduct(newProduct, (isNew = true));
+const addNewProduct = async (productData) => {
+  const { productName, productDesc, productPrice, productImg, adminId } =
+    productData;
+  
+  const newProduct = new Tables.ProductTable({
+    productName,
+    productDesc,
+    productPrice: parseInt(productPrice),
+    productImg,
+    adminId,
+  });
+
+  newProduct.createProduct();
+
+  
+  // await Tables.ProductTable.createOrUpdateProduct(newProduct, (isNew = true));
 };
 
 const getAllProducts = async () => {
@@ -18,7 +32,7 @@ const getOneProduct = async (productId) => {
 };
 
 const updateOneProduct = async (updatedData) => {
-  await Tables.ProductTable.createOrUpdateProduct(updatedData, (isNew = false));
+  await Tables.ProductTable.updateProduct(updatedData);
 };
 
 const deleteOneProduct = async (productId) => {

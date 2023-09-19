@@ -33,6 +33,17 @@ const productSchema = new mongoose.Schema(
   { collection: "ProductTable" }
 );
 
+// methods keyword creates a function that can be used with
+// creating class instance
+productSchema.methods.createProduct = async function () {
+  // Create a new product
+  try {
+    await this.save();
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 // statics keyword creates a static function
 productSchema.statics.findAllProducts = async function () {
   let allProducts;
@@ -75,33 +86,7 @@ productSchema.statics.deleteProduct = async function (productId) {
   }
 };
 
-productSchema.statics.createOrUpdateProduct = async function (
-  productData,
-  isNew = false
-) {
-  // Create a new product
-  if (isNew) {
-    const { productName, productDesc, productPrice, productImg, adminId } =
-      productData;
-
-    const productTable = new this({
-      productName,
-      productDesc,
-      productPrice: parseInt(productPrice),
-      productImg,
-      adminId,
-    });
-
-    try {
-      await productTable.save();
-    } catch (err) {
-      console.error(err);
-    }
-
-    return;
-  }
-
-  // Update the current product
+productSchema.statics.updateProduct = async function (productData) {
   const { _id, productName, productDesc, productPrice, productImg, adminId } =
     productData;
 
