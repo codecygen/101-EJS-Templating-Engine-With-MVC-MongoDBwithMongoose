@@ -2,67 +2,27 @@
 const Tables = require("../dbAssociation");
 
 const addNewProduct = async (newProduct) => {
-  const { productName, productDesc, productPrice, productImg, adminId } =
-    newProduct;
-
-  const productTable = new Tables.ProductTable({
-    productName,
-    productDesc,
-    productPrice: parseInt(productPrice),
-    productImg,
-    adminId,
-  });
-
-  try {
-    await productTable.save();
-  } catch (err) {
-    console.error(err);
-  }
+  await Tables.ProductTable.createOrUpdateProduct(newProduct, (isNew = true));
 };
 
 const getAllProducts = async () => {
-  let allProducts;
-
-  try {
-    allProducts = await Tables.ProductTable.find();
-  } catch (err) {
-    console.error(err);
-  }
+  const allProducts = Tables.ProductTable.findAllProducts();
 
   return allProducts;
 };
 
 const getOneProduct = async (productId) => {
-  let foundProduct;
-
-  try {
-    foundProduct = await Tables.ProductTable.findById(productId);
-  } catch (err) {
-    console.error(err);
-  }
+  const foundProduct = await Tables.ProductTable.getSingleProduct(productId);
 
   return foundProduct;
 };
 
 const updateOneProduct = async (updatedData) => {
-  const { _id, productName, productDesc, productPrice, productImg, adminId } =
-    updatedData;
-
-  try {
-    await Tables.ProductTable.findOneAndUpdate({ _id: _id }, updatedData, {
-      new: true,
-    });
-  } catch (err) {
-    console.error(err);
-  }
+  await Tables.ProductTable.createOrUpdateProduct(updatedData, (isNew = false));
 };
 
 const deleteOneProduct = async (productId) => {
-  try {
-    await Tables.ProductTable.findByIdAndDelete(productId);
-  } catch (err) {
-    console.error(err);
-  }
+  await Tables.ProductTable.deleteProduct(productId);
 };
 
 module.exports = {

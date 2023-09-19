@@ -37,7 +37,6 @@ const userSchema = new mongoose.Schema(
   { collection: "UserTable" }
 );
 
-// statics keyword creates a static function
 userSchema.statics.createUsers = async function (newUsers) {
   try {
     await this.insertMany(newUsers);
@@ -46,7 +45,6 @@ userSchema.statics.createUsers = async function (newUsers) {
   }
 };
 
-// statics keyword creates a static function
 userSchema.statics.getUsers = async function () {
   try {
     // this refers to UserTable
@@ -57,7 +55,6 @@ userSchema.statics.getUsers = async function () {
   }
 };
 
-// statics keyword creates a static function
 userSchema.statics.getSingleUser = async function (userId) {
   try {
     // this refers to UserTable
