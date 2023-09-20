@@ -66,7 +66,6 @@ userSchema.statics.getSingleUser = async function (userId) {
 };
 
 userSchema.statics.updateCart = async function (currentUser, addedProduct) {
-  console.log(currentUser, addedProduct);
 
   let isInCart =
     currentUser.userCart.findIndex((entry) =>
@@ -74,7 +73,6 @@ userSchema.statics.updateCart = async function (currentUser, addedProduct) {
     ) === -1
       ? false
       : true;
-
 
   // If in cart, add new line
   if (!isInCart) {
@@ -90,22 +88,25 @@ userSchema.statics.updateCart = async function (currentUser, addedProduct) {
   }
 
   // {
-    //   _id: new ObjectId("64e52e5ba9f5d11228df6a1a"),
-    //   userName: 'Aras',
-    //   userEmail: 'aras@gmail.com',
-    //   adminId: 'ea764199-dcb7-43bb-8e64-7afb783df70c',
-    //   userCart: [
-    //     { _id: new ObjectId("64f8e789338dc73937e88751"), qty: 6 },
-    //     { _id: new ObjectId("64f8eef47af9ade5a236939f"), qty: 6 }
-    //   ]
-    // }
+  //   _id: new ObjectId("64e52e5ba9f5d11228df6a1a"),
+  //   userName: 'Aras',
+  //   userEmail: 'aras@gmail.com',
+  //   adminId: 'ea764199-dcb7-43bb-8e64-7afb783df70c',
+  //   userCart: [
+  //     { _id: new ObjectId("64f8e789338dc73937e88751"), qty: 6 },
+  //     { _id: new ObjectId("64f8eef47af9ade5a236939f"), qty: 6 }
+  //   ]
+  // }
 
-  // If not in cart, add new quantity
-  const addToCart = await this.findOneAndUpdate(
-    {_id: currentUser._id, "userCart._id": addedProduct._id}, 
-    {$inc: {"userCart.$.qty": 1}}, 
-    {new: true}
-  );
+  try {
+    const addToCart = await this.updateOne(
+      { _id: currentUser._id, "userCart._id": addedProduct._id },
+      { $inc: { "userCart.$.qty": 1 } },
+      { new: true }
+    );
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 module.exports = mongoose.model("UserTable", userSchema);
