@@ -74,7 +74,7 @@ userSchema.statics.updateCart = async function (currentUser, addedProduct) {
       ? false
       : true;
 
-  // If in cart, add new line
+  // If not cart, add new line
   if (!isInCart) {
     currentUser.userCart.push({ _id: addedProduct._id, qty: 1 });
 
@@ -98,6 +98,7 @@ userSchema.statics.updateCart = async function (currentUser, addedProduct) {
   //   ]
   // }
 
+  // If in cart, increase the quantity
   try {
     const addToCart = await this.updateOne(
       { _id: currentUser._id, "userCart._id": addedProduct._id },
