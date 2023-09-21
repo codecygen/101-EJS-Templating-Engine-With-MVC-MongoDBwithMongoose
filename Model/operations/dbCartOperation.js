@@ -33,15 +33,15 @@ const getCartProducts = async (currentUser) => {
   return [allCartItems, totalPrice, userCartDB];
 };
 
-// const deleteCartProduct = async (currentUser, deletedProductId) => {
-//   await Tables.UserTable.removeCartItem(
-//     currentUser.userId,
-//     deletedProductId
-//   );
-// };
+const deleteCartProduct = async (currentUser, deletedProductId) => {
+  await Tables.UserTable.removeCartItem(
+    currentUser.userId,
+    deletedProductId
+  );
+};
 
 module.exports = {
   addUserAndProductToCart,
   getCartProducts,
-  // deleteCartProduct,
+  deleteCartProduct,
 };

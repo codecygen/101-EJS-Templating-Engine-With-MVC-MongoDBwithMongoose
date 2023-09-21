@@ -66,7 +66,6 @@ userSchema.statics.getSingleUser = async function (userId) {
 };
 
 userSchema.statics.updateCart = async function (currentUser, addedProduct) {
-
   let isInCart =
     currentUser.userCart.findIndex((entry) =>
       addedProduct._id.equals(entry._id)
@@ -107,6 +106,22 @@ userSchema.statics.updateCart = async function (currentUser, addedProduct) {
     );
   } catch (err) {
     console.error(err);
+  }
+};
+
+userSchema.statics.removeCartItem = async function (
+  userId,
+  productId
+) {
+
+  try {
+    await this.updateOne(
+      { _id: new ObjectId(userId) },
+      { $pull: { userCart: { _id: new ObjectId(productId) } } }
+    );
+  } catch (err) {
+    console.error(err);
+    throw err;
   }
 };
 

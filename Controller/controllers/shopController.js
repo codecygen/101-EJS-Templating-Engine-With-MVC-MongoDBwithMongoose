@@ -85,14 +85,14 @@ exports.getProduct = async (req, res, next) => {
   });
 };
 
-// exports.postDeleteCartItem = async (req, res, next) => {
-//   const loggedInUser = res.locals.selectedUser;
-//   const deletedCartItemId = req.body.deletedCartItemId;
+exports.postDeleteCartItem = async (req, res, next) => {
+  const loggedInUser = res.locals.selectedUser;
+  const deletedCartItemId = req.body.deletedCartItemId;
 
-//   await dbCartOperation.deleteCartProduct(loggedInUser, deletedCartItemId);
+  await dbCartOperation.deleteCartProduct(loggedInUser, deletedCartItemId);
 
-//   res.redirect("/cart");
-// };
+  res.redirect("/cart");
+};
 
 exports.getAllUsers = async (req, res, next) => {
   const allUsers = await dbAdminOperation.getAllUsers();
