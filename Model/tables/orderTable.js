@@ -1,62 +1,111 @@
 // Mongoose-Queries
+const mongoose = require("mongoose");
 
-const dbConnection = require("../dbConnection");
-const { ObjectId } = require("mongodb");
+const orderSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+    },
 
-const UserTable = require("./userTable");
-
-class OrderTable {
-  constructor(orderList, userId) {
-    this.orderList = orderList;
-    this.userId = userId;
-  }
-
-  async save() {
-    const db = dbConnection.getDatabase();
-    const orderCollection = await db.collection("OrderTable");
-
-    try {
-      await orderCollection.updateOne(
-        { userId: this.userId },
+    orders: [
+      [
         {
-          $push: {
-            orders: {
-              $each: [this.orderList],
-            },
+          productId: {
+            type: mongoose.Types.ObjectId,
+            required: true,
+            ref: "ProductTable",
+          },
+
+          qty: {
+            type: Number,
+            required: true,
           },
         },
-        { upsert: true } // This creates a new document if one doesn't exist for the specified userId
-      );
-    } catch (err) {
-      console.error(err);
-    }
+      ],
+    ],
+  },
+  { collection: "OrderTable" }
+);
 
-    await UserTable.removeAllCart(this.userId);
+orderSchema.statics.saveOrder = async function (orderList, userId) {
+
+  try {
+    await this.updateOne(
+      { userId: userId },
+      {
+        $push: {
+          orders: {
+            $each: [orderList],
+          },
+        },
+      },
+      { upsert: true } // This creates a new document if one doesn't exist for the specified userId
+    );
+  } catch (err) {
+    console.error(err);
   }
+};
 
-  static async getOrderList(userId) {
+module.exports = mongoose.model("OrderTable", orderSchema);
 
-    let foundOrders;
+// const dbConnection = require("../dbConnection");
+// const { ObjectId } = require("mongodb");
 
-    try {
-      const db = dbConnection.getDatabase();
-      foundOrders = await db
-        .collection("OrderTable")
-        .findOne({ userId: new ObjectId(userId) });
-    } catch (err) {
-      console.error(err);
-      throw err;
-    }
+// const UserTable = require("./userTable");
 
-    if(!foundOrders) {
-      foundOrders = {};
-      foundOrders.orders = [];
-    }
+// class OrderTable {
+//   constructor(orderList, userId) {
+//     this.orderList = orderList;
+//     this.userId = userId;
+//   }
 
-    const productIdsAndQty = foundOrders.orders;
+//   async save() {
+//     const db = dbConnection.getDatabase();
+//     const orderCollection = await db.collection("OrderTable");
 
-    return productIdsAndQty;
-  }
-}
+//     try {
+//       await orderCollection.updateOne(
+//         { userId: this.userId },
+//         {
+//           $push: {
+//             orders: {
+//               $each: [this.orderList],
+//             },
+//           },
+//         },
+//         { upsert: true } // This creates a new document if one doesn't exist for the specified userId
+//       );
+//     } catch (err) {
+//       console.error(err);
+//     }
 
-module.exports = OrderTable;
+//     await UserTable.removeAllCart(this.userId);
+//   }
+
+//   static async getOrderList(userId) {
+
+//     let foundOrders;
+
+//     try {
+//       const db = dbConnection.getDatabase();
+//       foundOrders = await db
+//         .collection("OrderTable")
+//         .findOne({ userId: new ObjectId(userId) });
+//     } catch (err) {
+//       console.error(err);
+//       throw err;
+//     }
+
+//     if(!foundOrders) {
+//       foundOrders = {};
+//       foundOrders.orders = [];
+//     }
+
+//     const productIdsAndQty = foundOrders.orders;
+
+//     return productIdsAndQty;
+//   }
+// }
+
+// module.exports = OrderTable;

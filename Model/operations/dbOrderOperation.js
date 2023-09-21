@@ -26,24 +26,23 @@ const Tables = require("../dbAssociation");
 //   return detailedOrderList;
 // };
 
-// const postCartToOrders = async (currentUser) => {
-//   const foundUser = await Tables.UserTable.findById(currentUser.userId);
-//   const foundCartItems = foundUser.userCart;
+const postCartToOrders = async (currentUser) => {
+  const foundUser = await Tables.UserTable.getSingleUser(currentUser.userId);
+  const foundCartItems = foundUser.userCart;
 
-//   // if no cart items do not do anything if person tries posting carts!
-//   if (!foundCartItems || foundCartItems.length === 0) {
-//     return;
-//   }
+  // if no cart items do not do anything if person tries posting carts!
+  if (!foundCartItems || foundCartItems.length === 0) {
+    return;
+  }
 
-//   const adjustedCartItems = foundCartItems.map((item) => {
-//     return { productId: item._id, qty: item.qty };
-//   });
-
-//   const orderTable = new Tables.OrderTable(adjustedCartItems, foundUser._id);
-//   await orderTable.save();
-// };
+  const adjustedCartItems = foundCartItems.map((item) => {
+    return { productId: item._id, qty: item.qty };
+  });
+  
+  await Tables.OrderTable.saveOrder(adjustedCartItems, foundUser._id);
+};
 
 module.exports = {
   // getOrders,
-  // postCartToOrders,
+  postCartToOrders,
 };

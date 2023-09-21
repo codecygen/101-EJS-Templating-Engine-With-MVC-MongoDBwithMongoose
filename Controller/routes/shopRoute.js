@@ -22,6 +22,6 @@ router.get("/login", shopController.getAllUsers);
 router.post("/login", shopController.postSelectedUser);
 
 // router.get("/orders", shopController.getOrders);
-// router.post("/orders", shopController.orderCart);
+router.post("/orders", shopController.orderCart);
 
 module.exports = router;
