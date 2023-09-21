@@ -38,20 +38,20 @@ exports.getIndex = async (req, res, next) => {
   });
 };
 
-// exports.getCart = async (req, res, next) => {
-//   const currentUser = await dbAdminOperation.getOneUser(req.session.userId);
+exports.getCart = async (req, res, next) => {
+  const currentUser = await dbAdminOperation.getOneUser(req.session.userId);
 
-//   const [cartProductList, cartTotalPrice, userCartDB] =
-//     await dbCartOperation.getCartProducts(currentUser);
+  const [cartProductList, cartTotalPrice, userCartDB] =
+    await dbCartOperation.getCartProducts(currentUser);
 
-//   res.render("shop/cart", {
-//     pagePath: "/cart",
-//     renderTitle: "Your Cart",
-//     cartProducts: cartProductList,
-//     cartPrice: cartTotalPrice,
-//     selectedUser: res.locals.selectedUser,
-//   });
-// };
+  res.render("shop/cart", {
+    pagePath: "/cart",
+    renderTitle: "Your Cart",
+    cartProducts: cartProductList,
+    cartPrice: cartTotalPrice,
+    selectedUser: res.locals.selectedUser,
+  });
+};
 
 exports.postCart = async (req, res, next) => {
   const addedProductId = req.body.addedProductId;
