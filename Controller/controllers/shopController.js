@@ -64,14 +64,6 @@ exports.postCart = async (req, res, next) => {
   res.redirect("/");
 };
 
-// exports.getCheckout = (req, res, next) => {
-//   res.render("shop/checkout", {
-//     pagePath: "/checkout",
-//     renderTitle: "Checkout Page",
-//     selectedUser: res.locals.selectedUser,
-//   });
-// };
-
 exports.getProduct = async (req, res, next) => {
   const productId = req.params.productId;
 
