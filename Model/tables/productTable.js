@@ -71,6 +71,11 @@ productSchema.statics.getSingleProduct = async function (productId) {
 
 productSchema.statics.adminProducts = async function (adminId) {
   try {
+    // Mongoose-Populate
+    // "populate" method will not work here
+    // check "Mongoose-Populate"
+    // section in "README,md"
+    // to understand the logic behind it.
     const adminProducts = await this.find({ adminId: adminId });
     return adminProducts;
   } catch (err) {
