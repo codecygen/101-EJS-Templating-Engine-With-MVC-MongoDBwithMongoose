@@ -1,5 +1,7 @@
 // Mongoose-Queries
 const mongoose = require("mongoose");
+const { ObjectId } = require("mongodb");
+
 const UserTable = require("./userTable");
 
 const orderSchema = new mongoose.Schema(
@@ -30,7 +32,6 @@ const orderSchema = new mongoose.Schema(
 );
 
 orderSchema.statics.saveOrder = async function (orderList, userId) {
-
   try {
     await this.updateOne(
       { userId: userId },
@@ -48,6 +49,26 @@ orderSchema.statics.saveOrder = async function (orderList, userId) {
   }
 
   await UserTable.removeAllCart(userId);
+};
+
+orderSchema.statics.getOrderList = async function (userId) {
+  let foundOrders;
+
+  try {
+    foundOrders = await this.findOne({ userId: new ObjectId(userId) });
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+
+  if(!foundOrders) {
+    foundOrders = {};
+    foundOrders.orders = [];
+  }
+
+  const productIdsAndQty = foundOrders.orders;
+
+  return productIdsAndQty;
 };
 
 module.exports = mongoose.model("OrderTable", orderSchema);

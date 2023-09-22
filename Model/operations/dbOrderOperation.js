@@ -1,30 +1,30 @@
 const Tables = require("../dbAssociation");
-// const dbProductOperation = require("./dbProductOperation");
+const dbProductOperation = require("./dbProductOperation");
 
-// const getOrders = async (currentUser) => {
-//   const productIdsAndQty = await Tables.OrderTable.getOrderList(
-//     currentUser.userId
-//   );
+const getOrders = async (currentUser) => {
+  const productIdsAndQty = await Tables.OrderTable.getOrderList(
+    currentUser.userId
+  );
 
-//   let detailedOrderList = [];
+  let detailedOrderList = [];
 
-//   for (order of productIdsAndQty) {
-//     const modifiedOrder = await Promise.all(order.map(async (product) => {
-//       const productDetails = await dbProductOperation.getOneProduct(
-//         product.productId
-//       );
+  for (order of productIdsAndQty) {
+    const modifiedOrder = await Promise.all(order.map(async (product) => {
+      const productDetails = await dbProductOperation.getOneProduct(
+        product.productId
+      );
 
-//       return {
-//         ...productDetails,
-//         qty: product.qty,
-//       };
-//     }));
+      return {
+        ...productDetails._doc,
+        qty: product.qty,
+      };
+    }));
 
-//     detailedOrderList.push(modifiedOrder);
-//   }
+    detailedOrderList.push(modifiedOrder);
+  }
 
-//   return detailedOrderList;
-// };
+  return detailedOrderList;
+};
 
 const postCartToOrders = async (currentUser) => {
   const foundUser = await Tables.UserTable.getSingleUser(currentUser.userId);
@@ -43,6 +43,6 @@ const postCartToOrders = async (currentUser) => {
 };
 
 module.exports = {
-  // getOrders,
+  getOrders,
   postCartToOrders,
 };

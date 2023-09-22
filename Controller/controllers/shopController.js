@@ -117,17 +117,17 @@ exports.postSelectedUser = async (req, res, next) => {
   res.redirect("/login");
 };
 
-// exports.getOrders = async (req, res, next) => {
-//   const loggedInUser = res.locals.selectedUser;
+exports.getOrders = async (req, res, next) => {
+  const loggedInUser = res.locals.selectedUser;
 
-//   const orderList = await dbOrderOperation.getOrders(loggedInUser);
+  const orderList = await dbOrderOperation.getOrders(loggedInUser);
 
-//   res.render("shop/orders", {
-//     pagePath: "/orders",
-//     renderTitle: "Orders",
-//     orderList,
-//   });
-// };
+  res.render("shop/orders", {
+    pagePath: "/orders",
+    renderTitle: "Orders",
+    orderList,
+  });
+};
 
 exports.orderCart = async (req, res, next) => {
   const loggedInUser = res.locals.selectedUser;
