@@ -69,7 +69,12 @@ Also the following methods work with find, findOne, findById and findOneAndUpdat
 ![methods that work](https://github.com/codecygen/101-EJS-Templating-Engine-With-MVC-MongoDBwithMongoose/blob/main/Images/164075580-a4e6fa11-cf0f-4f5f-9265-d065f6456a95.png?raw=true)
 
 ```javascript
-const user = await User.findById(userId).populate('productId');
+const user = await User.findById(userId).populate("productId");
+
+// Basically it says only show userName, userAge as a result
+// but populate the productId section by pulling the _id of the Product model
+// also only populate it with productName and no other details of that product.
+const user = await User.findById(userId).select("userName", "productId", "productName").populate("productId", "productName");
 ```
 
 **Solution:** it means here that productId is directing us to "_id" field of Product Model. Basically it searches through User model and tries to find User._id === userId. Also populates the productId by finding Product._id === productId then puts all product details under that user as well.
