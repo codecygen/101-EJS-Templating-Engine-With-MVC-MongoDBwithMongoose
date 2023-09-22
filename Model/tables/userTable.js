@@ -109,11 +109,7 @@ userSchema.statics.updateCart = async function (currentUser, addedProduct) {
   }
 };
 
-userSchema.statics.removeCartItem = async function (
-  userId,
-  productId
-) {
-
+userSchema.statics.removeCartItem = async function (userId, productId) {
   try {
     await this.updateOne(
       { _id: new ObjectId(userId) },
@@ -122,6 +118,15 @@ userSchema.statics.removeCartItem = async function (
   } catch (err) {
     console.error(err);
     throw err;
+  }
+};
+
+userSchema.statics.removeAllCart = async function (userId) {
+
+  try {
+    await this.updateOne({ _id: userId }, { $set: { userCart: [] } });
+  } catch (err) {
+    console.error(err);
   }
 };
 
