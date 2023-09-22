@@ -62,6 +62,22 @@ express-session is a package and it keeps some session files in it so the select
 - **Mongoose-Queries**
 All query related info kept inside "/Model/tables/orderTable.js", "/Model/tables/productTable.js" and "/Model/tables/userTable.js".
 - **Mongoose-Populate**
-This is a method that is supposed to work but I could not get it working in this project.
+This is a method that is supposed to work but I could not get it working in this project. Gives me null.
 
-![alt text](http://url/to/img.png)
+![methods that work](https://github.com/codecygen/101-EJS-Templating-Engine-With-MVC-MongoDBwithMongoose/blob/main/Images/164075580-a4e6fa11-cf0f-4f5f-9265-d065f6456a95.png?raw=true)
+
+```javascript
+adminId: {
+  type: mongoose.Types.ObjectId,
+  ref: "ProductTable",  // Reference to the ProductTable model
+},
+
+adminId: {
+  type: mongoose.Types.ObjectId,
+  ref: "UserTable",  // Reference to the UserTable model
+  required: true,
+},
+
+
+const user = await UserTable.findById(userId).populate('adminId');
+```
