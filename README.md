@@ -61,3 +61,7 @@ Basically, **"./Model/database/dbConnection.js"** is used in **"./index.js"** to
 express-session is a package and it keeps some session files in it so the selected admin will be known by the system.
 - **Mongoose-Queries**
 All query related info kept inside "/Model/tables/orderTable.js", "/Model/tables/productTable.js" and "/Model/tables/userTable.js".
+- **Mongoose-Populate**
+This is a method that is supposed to work but I could not get it working in this project.
+
+![alt text](http://url/to/img.png)
